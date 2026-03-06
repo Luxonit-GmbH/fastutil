@@ -7,7 +7,7 @@
 	<!-- ************************************** WARNING: MAVEN SH*T ************************************** -->
 
 	<!-- define Maven coordinates -->
-	<property name="groupId" value="it.unimi.dsi" />
+	<property name="groupId" value="${env.MAVEN_GROUP_ID}" />
 	<property name="artifactId" value="fastutil" />
 	<property name="version" value="${version}" />
 
@@ -24,10 +24,10 @@
 
 	<!-- defined maven snapshots and staging repository id and url -->
 
-	<property name="maven-snapshots-repository-id" value="sonatype-nexus-snapshots" />
-	<property name="maven-snapshots-repository-url" value="https://ossrh-staging-api.central.sonatype.com/content/repositories/snapshots/" />
-	<property name="maven-staging-repository-id" value="sonatype-nexus-staging" />
-	<property name="maven-staging-repository-url" value="https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/" />
+	<property name="maven-snapshots-repository-id" value="${env.MAVEN_SNAPSHOTS_REPOSITORY_ID}" />
+	<property name="maven-snapshots-repository-url" value="${env.MAVEN_SNAPSHOTS_REPOSITORY_URL}" />
+	<property name="maven-staging-repository-id" value="${env.MAVEN_STAGING_REPOSITORY_ID}" />
+	<property name="maven-staging-repository-url" value="${env.MAVEN_STAGING_REPOSITORY_URL}" />
 
 	<target name="src-core">
 		<delete dir="$src}-core"/>
