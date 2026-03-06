@@ -96,6 +96,12 @@
 		</jar>
 	</target>
 
+	<target name="dist-all" depends="dist,dist-core" description="generate all distributions">
+	</target>
+	
+	<target name="pom-all" depends="pom,pom-core" description="generate all pom files">
+	</target>
+	
 	<target name="pom-core" description="insert version into pom (core)">
 		<copy tofile="pom-core.xml" file="pom-core-model.xml" overwrite="true">
 			<filterset>
