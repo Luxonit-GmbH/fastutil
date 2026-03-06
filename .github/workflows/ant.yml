@@ -69,17 +69,11 @@ jobs:
       - name: Split JARs
         run: ./split.sh
 
-      - name: Build main distribution with Ant
-        run: ant dist -Dversion=${PROJECT_VERSION} -noinput -buildfile build.xml
-
-      - name: Generate main pom.xml with Ant
-        run: ant pom -Dversion=${PROJECT_VERSION} -noinput -buildfile build.xml
-
-      - name: Build core distribution with Ant
-        run: ant dist-core -Dversion=${PROJECT_VERSION} -noinput -buildfile build.xml
-
-      - name: Generate core pom.xml with Ant
-        run: ant pom-core -Dversion=${PROJECT_VERSION} -noinput -buildfile build.xml
+      - name: Build all distributions with Ant
+        run: ant dist-all -Dversion=${PROJECT_VERSION} -noinput -buildfile build.xml
+      
+      - name: Generate all pom.xml files with Ant
+        run: ant pom-all -Dversion=${PROJECT_VERSION} -noinput -buildfile build.xml
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v6
