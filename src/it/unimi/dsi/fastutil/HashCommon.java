@@ -241,4 +241,17 @@ public class HashCommon {
 		 */
 		return nextPowerOfTwo((long)Math.ceil(expected / (double)f));
 	}
+
+	/** Returns the least prime size smaller than or equal to 2<sup>30</sup> and larger than or equal to {@code Math.ceil(expected / f)}.
+	 *
+	 * @param expected the expected number of elements in a hash table.
+	 * @param f the load factor.
+	 * @return the minimum possible size for a backing array.
+	 * @throws IllegalArgumentException if the necessary size is larger than 2<sup>30</sup>.
+	 */
+	public static int primeSize(final int expected, final float f) {
+		final long s = Math.max(PrimeFinder.minPrime(), PrimeFinder.nextPrime((int) Math.ceil(expected / (double) f)));
+		if (s > (1 << 30)) throw new IllegalArgumentException("Too large (" + expected + " expected elements with load factor " + f + ")");
+		return (int)s;
+	}
 }
