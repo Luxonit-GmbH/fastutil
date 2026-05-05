@@ -365,6 +365,11 @@ $(OPEN_HASH_SETS): drv/OpenHashSet.drv; ./gencsource.sh $< $@ >$@
 
 CSOURCES += $(OPEN_HASH_SETS)
 
+OPEN_DOUBLE_HASH_SETS := $(foreach k,$(TYPE_NOBOOL), $(GEN_SRCDIR)/$(PKG_PATH)/$(PACKAGE_$(k))/$(k)OpenDoubleHashSet.c)
+$(OPEN_DOUBLE_HASH_SETS): drv/OpenDoubleHashSet.drv; ./gencsource.sh $< $@ >$@
+
+CSOURCES += $(OPEN_DOUBLE_HASH_SETS)
+
 OPEN_HASH_BIG_SETS := $(foreach k,$(TYPE_BIG), $(GEN_SRCDIR)/$(PKG_PATH)/$(PACKAGE_$(k))/$(k)OpenHashBigSet.c)
 $(OPEN_HASH_BIG_SETS): drv/OpenHashBigSet.drv; ./gencsource.sh $< $@ >$@
 
@@ -404,6 +409,11 @@ OPEN_HASH_MAPS := $(foreach k,$(TYPE_NOBOOL), $(foreach v,$(TYPE), $(GEN_SRCDIR)
 $(OPEN_HASH_MAPS): drv/OpenHashMap.drv; ./gencsource.sh $< $@ >$@
 
 CSOURCES += $(OPEN_HASH_MAPS)
+
+OPEN_DOUBLE_HASH_MAPS := $(foreach k,$(TYPE_NOBOOL), $(foreach v,$(TYPE), $(GEN_SRCDIR)/$(PKG_PATH)/$(PACKAGE_$(k))/$(k)2$(v)OpenDoubleHashMap.c))
+$(OPEN_DOUBLE_HASH_MAPS): drv/OpenDoubleHashMap.drv; ./gencsource.sh $< $@ >$@
+
+CSOURCES += $(OPEN_DOUBLE_HASH_MAPS)
 
 LINKED_OPEN_HASH_MAPS := $(foreach k,$(TYPE_NOBOOL), $(foreach v,$(TYPE), $(GEN_SRCDIR)/$(PKG_PATH)/$(PACKAGE_$(k))/$(k)2$(v)LinkedOpenHashMap.c))
 $(LINKED_OPEN_HASH_MAPS): drv/LinkedOpenHashMap.drv; ./gencsource.sh $< $@ >$@
