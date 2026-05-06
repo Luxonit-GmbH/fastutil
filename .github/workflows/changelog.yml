@@ -25,7 +25,12 @@ concurrency:
 
 jobs:
   updateChangelog:
-    if: github.event_name != 'pull_request_target' || github.event.pull_request.merged == true
+    if: >-
+      github.event_name != 'pull_request_target' ||
+      (
+        github.event.pull_request.merged == true &&
+        !startsWith(github.event.pull_request.head.ref, 'update-changelog')
+      )
     runs-on: ubuntu-latest
     name: Update Changelog
     timeout-minutes: 15
