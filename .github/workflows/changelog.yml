@@ -11,7 +11,8 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        required: true
+        description: Existing release tag or version, for example v1.0.2 or 1.0.2. Leave empty to regenerate Unreleased.
+        required: false
         type: string
 
 permissions:
@@ -37,6 +38,9 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
+      - name: Refresh git tags
+        run: git fetch --force --tags origin
+
       - name: Set changelog context
         run: |
           $tagName = ""
@@ -59,9 +63,24 @@ jobs:
         shell: bash
         run: |
           if [[ -n "${TAG_VERSION:-}" ]]; then
-            git-chglog --config .chglog/config.yml -o CHANGELOG.md "..${TAG_VERSION}"
+            resolved_tag="${TAG_VERSION}"
+
+            if ! git rev-parse -q --verify "refs/tags/${resolved_tag}" >/dev/null; then
+              if [[ "${resolved_tag}" != v* ]] && git rev-parse -q --verify "refs/tags/v${resolved_tag}" >/dev/null; then
+                resolved_tag="v${resolved_tag}"
+              elif [[ "${resolved_tag}" == v* ]] && git rev-parse -q --verify "refs/tags/${resolved_tag#v}" >/dev/null; then
+                resolved_tag="${resolved_tag#v}"
+              else
+                echo "Tag '${TAG_VERSION}' was not found in the local repository." >&2
+                echo "Available tags:" >&2
+                git tag --list >&2
+                exit 1
+              fi
+            fi
+
+            git-chglog --config .chglog/config.yml -o CHANGELOG.md "..${resolved_tag}"
           else
-            git-chglog --config .chglog/config.yml -o CHANGELOG.md
+            git-chglog --config .chglog/config.yml --next-tag unreleased -o CHANGELOG.md
           fi
 
       - name: Create Pull Request

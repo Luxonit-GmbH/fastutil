@@ -4,6 +4,57 @@ This changelog records changes made in the Luxonit fork of fastutil.
 It is maintained as a prominent notice of modifications for this Apache License 2.0 distribution.
 Upstream project: <https://github.com/vigna/fastutil>
 
+{{ if .Unreleased.CommitGroups }}
+
+## {{ if .Versions }}[Unreleased]({{ $.Info.RepositoryURL }}/compare/{{ (index .Versions 0).Tag.Name }}...HEAD){{ else }}Unreleased{{ end }}
+
+{{ range .Unreleased.CommitGroups }}
+
+### Unreleased {{ .Title }}
+
+{{ range .Commits }}
+
+- {{ .Subject }}
+
+{{ end }}
+{{ end }}
+
+{{ if .Unreleased.RevertCommits }}
+
+### Unreleased Reverts
+
+{{ range .Unreleased.RevertCommits }}
+
+- {{ .Revert.Header }}
+
+{{ end }}
+{{ end }}
+
+{{ if .Unreleased.MergeCommits }}
+
+### Unreleased Pull Requests
+
+The merged pull requests below identify the modifications included in this unreleased version.
+
+{{ range .Unreleased.MergeCommits }}
+
+- {{ .Header }}
+
+{{ end }}
+{{ end }}
+
+{{ if .Unreleased.NoteGroups }}
+{{ range .Unreleased.NoteGroups }}
+
+### Unreleased Notes: {{ .Title }}
+
+{{ range .Notes }}
+{{ .Body }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
+
 {{ range .Versions }}
 
 ## {{ if .Tag.Previous }}[{{ .Tag.Name }}]({{ $.Info.RepositoryURL }}/compare/{{ .Tag.Previous.Name }}...{{ .Tag.Name }}){{ else }}{{ .Tag.Name }}{{ end }}
